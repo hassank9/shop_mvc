@@ -1,0 +1,10 @@
+Options -Indexes
+RewriteEngine On
+
+# إذا كان الملف/المجلد موجود، اتركه
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# غير ذلك وجهه إلى index.php
+RewriteRule ^ index.php [L]

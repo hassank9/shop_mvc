@@ -1,0 +1,14 @@
+{
+  "name": "firstclass/shop-mvc",
+  "description": "First-class PHP 8.1+ MVC shop skeleton (no framework)",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
