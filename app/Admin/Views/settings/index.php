@@ -33,6 +33,10 @@ $settings = $settings ?? [];
         grid-column:1 / -1;
     }
 
+    .settings-tab-panel .settings-card{
+    grid-column: 1 / -1;
+    }
+
     .settings-card-header{
         padding:18px 22px;
         border-bottom:1px solid #eef1f5;
@@ -180,6 +184,44 @@ $settings = $settings ?? [];
         margin-top:4px;
     }
 
+    .settings-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:4px;
+    }
+
+    .settings-tab-btn{
+        border:1px solid #e5e7eb;
+        background:#fff;
+        color:#111827;
+        border-radius:16px;
+        padding:12px 18px;
+        font-size:14px;
+        font-weight:800;
+        cursor:pointer;
+        transition:.2s ease;
+    }
+
+    .settings-tab-btn.active{
+        background:#ff7a1a;
+        color:#fff;
+        border-color:#ff7a1a;
+        box-shadow:0 10px 25px rgba(255,122,26,.18);
+    }
+
+    .settings-tab-panel{
+        display:none;
+    }
+
+    .settings-tab-panel.active{
+        display:block;
+    }
+
+    .settings-tab-panel + .settings-tab-panel{
+        margin-top:0;
+    }
+
     @media (max-width: 991px){
         .settings-grid,
         .form-grid,
@@ -220,10 +262,18 @@ $settings = $settings ?? [];
 
     <div id="settingsMessage"></div>
 
+    <div class="settings-tabs">
+    <button type="button" class="settings-tab-btn active" data-tab="generalTab">عام</button>
+    <button type="button" class="settings-tab-btn" data-tab="aboutTab">من نحن</button>
+    <button type="button" class="settings-tab-btn" data-tab="contactTab">تواصل معنا</button>
+    <button type="button" class="settings-tab-btn" data-tab="receiptTab">الطباعة</button>
+    </div>
+
     <form id="settingsForm" class="settings-form" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?= (int)($settings['id'] ?? 0) ?>">
 
-        <div class="settings-grid">
+        <div class="settings-tab-panel active" id="generalTab">
+            <div class="settings-grid">
 
             <div class="settings-card">
                 <div class="settings-card-header">
@@ -280,6 +330,14 @@ $settings = $settings ?? [];
                 </div>
             </div>
 
+                </div>
+</div>
+
+<div class="settings-tab-panel" id="aboutTab">
+    <div class="settings-grid">
+
+
+            
             <div class="settings-card">
                 <div class="settings-card-header">
                     <h3 class="settings-card-title">من نحن</h3>
@@ -311,6 +369,13 @@ $settings = $settings ?? [];
                     </div>
                 </div>
             </div>
+
+
+                </div>
+</div>
+
+<div class="settings-tab-panel" id="contactTab">
+    <div class="settings-grid">
 
             <div class="settings-card">
                 <div class="settings-card-header">
@@ -371,6 +436,14 @@ $settings = $settings ?? [];
                     </div>
                 </div>
             </div>
+
+
+                </div>
+</div>
+
+<div class="settings-tab-panel" id="receiptTab">
+    <div class="settings-grid">
+
 
             <div class="settings-card">
                 <div class="settings-card-header">
@@ -435,6 +508,8 @@ $settings = $settings ?? [];
             </div>
 
         </div>
+            </div>
+</div>
 
         <div class="actions-bar">
             <button type="submit" class="btn-save" id="settingsSubmitBtn">حفظ الإعدادات</button>
@@ -537,4 +612,29 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+const tabButtons = document.querySelectorAll('.settings-tab-btn');
+const tabPanels = document.querySelectorAll('.settings-tab-panel');
+
+tabButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-tab');
+
+        tabButtons.forEach(function (btn) {
+            btn.classList.remove('active');
+        });
+
+        tabPanels.forEach(function (panel) {
+            panel.classList.remove('active');
+        });
+
+        this.classList.add('active');
+
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) {
+            targetPanel.classList.add('active');
+        }
+    });
+});
+
 </script>
