@@ -23,6 +23,8 @@ use App\Admin\Controllers\UsersController as AdminUsersController;
 use App\Admin\Controllers\UsersApiController as AdminUsersApiController;
 use App\Admin\Controllers\SettingsController as AdminSettingsController;
 use App\Admin\Controllers\SettingsApiController as AdminSettingsApiController;
+use App\Admin\Controllers\HeroController as AdminHeroController;
+use App\Admin\Controllers\HeroApiController as AdminHeroApiController;
 
 $router->get('/product', [ProductController::class, 'show']);
 
@@ -193,3 +195,10 @@ $router->post('/admin/api/users/delete', [AdminUsersApiController::class, 'delet
 
 $router->get('/admin/settings', [AdminSettingsController::class, 'index']);
 $router->post('/admin/api/settings/update', [AdminSettingsApiController::class, 'update']);
+
+$router->get('/admin/hero', [AdminHeroController::class, 'index']);
+
+$router->post('/admin/api/hero/store', [AdminHeroApiController::class, 'store']);
+$router->post('/admin/api/hero/update', [AdminHeroApiController::class, 'update']);
+$router->post('/admin/api/hero/delete', [AdminHeroApiController::class, 'delete']);
+$router->post('/admin/api/hero/toggle', [AdminHeroApiController::class, 'toggle']);

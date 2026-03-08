@@ -195,7 +195,8 @@ function isAdminActive(string $needle, string $currentPath): string {
     </span>
 </a>
 
-<a class="sidebar-link" href="#">
+<a class="sidebar-link <?= isAdminActive('/admin/hero', $currentPath) ?>"
+   href="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::path('/admin/hero')) ?>">
     <span class="sidebar-link-main">
         <span class="sidebar-icon">🖼</span>
         <span class="sidebar-text">الهيرو</span>
