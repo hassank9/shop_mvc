@@ -54,20 +54,22 @@ public function getAll(?string $status = null, ?string $dateFrom = null, ?string
     return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 }
 
-    public function findById(int $id): array|false
+public function findById(int $id): array|false
 {
     $sql = "
-SELECT
-    id,
-    user_id,
-    customer_name,
-    customer_phone,
-    total,
-    status,
-    notes,
-    created_at
-FROM orders
-        WHERE id = :id
+        SELECT
+            o.id,
+            o.user_id,
+            o.customer_name,
+            o.customer_phone,
+            u.address,
+            o.total,
+            o.status,
+            o.notes,
+            o.created_at
+        FROM orders o
+        LEFT JOIN users u ON u.id = o.user_id
+        WHERE o.id = :id
         LIMIT 1
     ";
 

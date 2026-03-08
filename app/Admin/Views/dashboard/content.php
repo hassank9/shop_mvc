@@ -288,17 +288,17 @@
     </div>
 
     <div class="stat-card">
-        <div class="stat-icon">🚚</div>
-        <p class="stat-label">مع المندوب</p>
-        <h3 class="stat-value"><?= (int)($stats['out_for_delivery_orders_count'] ?? 0) ?></h3>
-        <span class="stat-note">قيد التوصيل</span>
-    </div>
-
-    <div class="stat-card">
         <div class="stat-icon">❌</div>
         <p class="stat-label">الطلبات الملغاة</p>
         <h3 class="stat-value"><?= (int)($stats['cancelled_orders_count'] ?? 0) ?></h3>
         <span class="stat-note">طلبات ألغيت</span>
+    </div>
+
+    <div class="stat-card primary">
+        <div class="stat-icon">💰</div>
+        <p class="stat-label">إجمالي المبيعات</p>
+        <h3 class="stat-value"><?= number_format((float)($stats['total_sales'] ?? 0), 2) ?></h3>
+        <span class="stat-note">مجموع كل الطلبات</span>
     </div>
 
     <div class="stat-card">
@@ -308,16 +308,11 @@
     <span class="stat-note">بدون الطلبات الملغاة</span>
 </div>
 
-    <div class="stat-card primary">
-        <div class="stat-icon">💰</div>
-        <p class="stat-label">إجمالي المبيعات</p>
-        <h3 class="stat-value"><?= number_format((float)($stats['total_sales'] ?? 0), 2) ?></h3>
-        <span class="stat-note">مجموع كل الطلبات</span>
-    </div>
+
 </div>
     
 </div>
-
+<br>
 <div class="dashboard-panels">
     <div class="panel-card">
         <h3 class="panel-title">المنتجات القريبة من النفاد</h3>

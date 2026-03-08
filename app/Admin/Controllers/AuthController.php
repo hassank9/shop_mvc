@@ -20,29 +20,26 @@ class AuthController
         $this->adminModel = new Admin($this->db);
     }
 
-    private function createAdminConnection(): PDO
-    {
-        $host = 'localhost';
-        $dbname = 'firstclass_shop';      // غيّرها إلى اسم قاعدة بياناتك الحقيقي
-        $username = 'root';        // غيّرها إذا عندك اسم مستخدم مختلف
-        $password = '';            // غيّرها إذا عندك كلمة مرور
+private function createAdminConnection(): PDO
+{
+    $config = require dirname(__DIR__, 3) . '/config/database.php';
 
-        try {
-            $pdo = new PDO(
-                "mysql:host={$host};dbname={$dbname};charset=utf8mb4",
-                $username,
-                $password,
-                [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                ]
-            );
+    try {
+        $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['database']};charset={$config['charset']}";
 
-            return $pdo;
-        } catch (PDOException $e) {
-            die('Admin DB Connection Failed: ' . $e->getMessage());
-        }
+        return new PDO(
+            $dsn,
+            $config['username'],
+            $config['password'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]
+        );
+    } catch (PDOException $e) {
+        die('Admin DB Connection Failed: ' . $e->getMessage());
     }
+}
 
     public function showLogin(): void
     {

@@ -1,9 +1,28 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+
+<?php
+$siteSettings = $siteSettings ?? [];
+
+$siteName = trim((string)($siteSettings['site_name_ar'] ?? ''));
+if ($siteName === '') {
+    $siteName = trim((string)($siteSettings['site_name_en'] ?? ''));
+}
+if ($siteName === '') {
+    $siteName = ' ';
+}
+
+$siteLogo = trim((string)($siteSettings['logo'] ?? ''));
+$siteFavicon = trim((string)($siteSettings['favicon'] ?? ''));
+?>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= htmlspecialchars($title ?? 'Shop', ENT_QUOTES, 'UTF-8') ?></title>
+<title><?= htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8') ?></title>
+<?php if ($siteFavicon !== ''): ?>
+  <link rel="icon" href="<?= htmlspecialchars($siteFavicon, ENT_QUOTES, 'UTF-8') ?>">
+<?php endif; ?>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -30,61 +49,690 @@
 </head>
 <body>
 
+
+
+
 <nav class="navbar navbar-expand-lg bg-white sticky-top border-bottom">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="<?= htmlspecialchars(\App\Helpers\Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">🛒 FirstClass</a>
 
+    <a class="navbar-brand fw-bold site-brand-link"
+       href="<?= htmlspecialchars(\App\Helpers\Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">
+      <?php if ($siteLogo !== ''): ?>
+        <img
+          src="<?= htmlspecialchars($siteLogo, ENT_QUOTES, 'UTF-8') ?>"
+          alt="<?= htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8') ?>"
+          class="site-brand-logo"
+        >
+      <?php else: ?>
+        <span class="site-brand-emoji">🛒</span>
+      <?php endif; ?>
 
-    <?php
-  $return = $_SERVER['REQUEST_URI'] ?? \App\Helpers\Url::to('/');
-  $loginUrl = \App\Helpers\Url::to('/login?return=' . urlencode($return));
-  $regUrl   = \App\Helpers\Url::to('/register?return=' . urlencode($return));
-  $ordersUrl = \App\Helpers\Url::to('/orders');
-?>
-<div class="ms-auto d-flex gap-2 align-items-center">
-    <div class="ms-auto d-flex gap-2 align-items-center">
-      <button class="btn btn-outline-dark position-relative"
-              type="button"
-              data-bs-toggle="offcanvas" data-bs-target="#cartCanvas"
-              aria-controls="cartCanvas">
-        🧺 السلة
-        <span id="cartBadge" class="position-absolute top-0 start-0 translate-middle badge rounded-pill text-bg-danger">0</span>
-      </button>
+      <span class="site-brand-text"><?= htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8') ?></span>
+    </a>
+
+    <div class="nav-main-links">
+      <a class="nav-main-link is-active"
+         href="<?= htmlspecialchars(\App\Helpers\Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">
+        الرئيسية
+      </a>
+
+      <a class="nav-main-link"
+         href="<?= htmlspecialchars(\App\Helpers\Url::to('/about'), ENT_QUOTES, 'UTF-8') ?>">
+        من نحن
+      </a>
+
+      <a class="nav-main-link"
+         href="<?= htmlspecialchars(\App\Helpers\Url::to('/contact'), ENT_QUOTES, 'UTF-8') ?>">
+        تواصل معنا
+      </a>
     </div>
 
     <?php
-$ordersUrl = \App\Helpers\Url::to('/my-orders');
-$loginUrl  = \App\Helpers\Url::to('/login?return=' . urlencode(\App\Helpers\Url::to($_SERVER['REQUEST_URI'] ?? '/')));
-$regUrl    = \App\Helpers\Url::to('/register?return=' . urlencode(\App\Helpers\Url::to($_SERVER['REQUEST_URI'] ?? '/')));
-?>
+      $return = $_SERVER['REQUEST_URI'] ?? \App\Helpers\Url::to('/');
+      $loginUrl = \App\Helpers\Url::to('/login?return=' . urlencode($return));
+      $regUrl   = \App\Helpers\Url::to('/register?return=' . urlencode($return));
+      $ordersUrl = \App\Helpers\Url::to('/my-orders');
+    ?>
 
-  <?php if (\App\Helpers\Auth::check()): ?>
-    <a class="btn btn-outline-primary"
-       href="<?= htmlspecialchars($ordersUrl, ENT_QUOTES, 'UTF-8') ?>">
-      طلباتي
+    <div class="nav-actions-wrap">
+      <button class="btn btn-outline-dark position-relative"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#cartCanvas"
+              aria-controls="cartCanvas">
+        🧺 السلة
+        <span id="cartBadge"
+              class="position-absolute top-0 start-0 translate-middle badge rounded-pill text-bg-danger">0</span>
+      </button>
+
+      <?php if (\App\Helpers\Auth::check()): ?>
+        <a class="btn btn-outline-primary"
+           href="<?= htmlspecialchars($ordersUrl, ENT_QUOTES, 'UTF-8') ?>">
+          طلباتي
+        </a>
+
+        <form method="POST"
+              action="<?= htmlspecialchars(\App\Helpers\Url::to('/logout'), ENT_QUOTES, 'UTF-8') ?>"
+              class="d-inline">
+          <?= \App\Helpers\Csrf::input() ?>
+          <button class="btn btn-danger">خروج</button>
+        </form>
+      <?php else: ?>
+        <a class="btn btn-outline-primary"
+           href="<?= htmlspecialchars($loginUrl, ENT_QUOTES, 'UTF-8') ?>">
+          دخول
+        </a>
+
+        <a class="btn btn-primary"
+           href="<?= htmlspecialchars($regUrl, ENT_QUOTES, 'UTF-8') ?>">
+          إنشاء حساب
+        </a>
+      <?php endif; ?>
+    </div>
+
+
+    <div class="mobile-nav-links">
+  <div class="mobile-nav-links-wrap">
+    <a class="mobile-nav-link is-active"
+       href="<?= htmlspecialchars(\App\Helpers\Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">
+      الرئيسية
     </a>
 
-    <form method="POST" action="<?= htmlspecialchars(\App\Helpers\Url::to('/logout'), ENT_QUOTES, 'UTF-8') ?>" class="d-inline">
-      <?= \App\Helpers\Csrf::input() ?>
-      <button class="btn btn-danger">خروج</button>
-    </form>
-  <?php else: ?>
-    <a class="btn btn-outline-primary"
-       href="<?= htmlspecialchars($loginUrl, ENT_QUOTES, 'UTF-8') ?>">
-      دخول
+    <a class="mobile-nav-link"
+       href="<?= htmlspecialchars(\App\Helpers\Url::to('/about'), ENT_QUOTES, 'UTF-8') ?>">
+      من نحن
     </a>
-    <a class="btn btn-primary"
-       href="<?= htmlspecialchars($regUrl, ENT_QUOTES, 'UTF-8') ?>">
-      إنشاء حساب
-    </a>
-  <?php endif; ?>
 
+    <a class="mobile-nav-link"
+       href="<?= htmlspecialchars(\App\Helpers\Url::to('/contact'), ENT_QUOTES, 'UTF-8') ?>">
+      تواصل معنا
+    </a>
+  </div>
 </div>
 
   </div>
 </nav>
 
+
+
 <main class="container py-4">
+
+
+
+
+<?php $heroSlides = $heroSlides ?? []; ?>
+
+<style>
+  .hero-main{
+    margin: 18px 0 28px;
+  }
+
+.hero-slider{
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at top right, rgba(249,115,22,.12), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(251,191,36,.10), transparent 24%),
+    linear-gradient(135deg, #fff7ed 0%, #ffffff 48%, #fff1e6 100%);
+  border: 1px solid rgba(251, 146, 60, .16);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, .10);
+}
+
+  .hero-track{
+    display: flex;
+    transition: transform .45s ease;
+    will-change: transform;
+    direction: ltr;
+  }
+
+.hero-slide{
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: .95fr 1.05fr;
+  align-items: center;
+  gap: 34px;
+  padding: 42px;
+  direction: rtl;
+  min-height: 430px;
+}
+
+.hero-copy{
+    padding-inline-start: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: heroFadeUp .55s ease;
+}
+
+.hero-badge{
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.86);
+  border: 1px solid rgba(249,115,22,.16);
+  color: #ea580c;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 10px 24px rgba(249,115,22,.08);
+}
+
+.hero-title{
+  margin: 0;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.12;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -.02em;
+}
+
+.hero-subtitle{
+  margin: 0;
+  color: #667085;
+  font-size: 16px;
+  line-height: 2;
+  max-width: 620px;
+}
+  .hero-actions{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .hero-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 20px;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 800;
+    transition: .2s ease;
+    border: 1px solid transparent;
+  }
+
+.hero-btn-primary{
+  background: linear-gradient(135deg, #ff7a1a, #ea580c);
+  color: #fff;
+  box-shadow: 0 14px 30px rgba(249,115,22,.30);
+}
+
+.hero-btn-primary:hover{
+  transform: translateY(-2px);
+  color: #fff;
+  box-shadow: 0 18px 34px rgba(249,115,22,.34);
+}
+
+.hero-btn-secondary{
+  background: rgba(255,255,255,.84);
+  border-color: rgba(17,24,39,.08);
+  color: #111827;
+  backdrop-filter: blur(8px);
+}
+
+  .hero-btn-secondary:hover{
+    background: #fff;
+    color: #111827;
+  }
+
+  .hero-media{
+    position: relative;
+    min-height: 320px;
+  }
+
+.hero-media-card{
+  position: relative;
+  height: 100%;
+  min-height: 360px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(255,255,255,.55);
+  box-shadow: 0 24px 50px rgba(15,23,42,.12);
+}
+
+  .hero-image{
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-no-image{
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    background:
+      radial-gradient(circle at top right, rgba(251,146,60,.18), transparent 30%),
+      linear-gradient(135deg, #fff, #fff7ed);
+    font-weight: 800;
+  }
+
+  .hero-nav{
+    position: absolute;
+    inset-inline: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+.hero-nav button{
+  pointer-events: auto;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 16px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 14px 28px rgba(15,23,42,.12);
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 900;
+  color: #111827;
+  transition: .2s ease;
+}
+
+.hero-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(17,24,39,.16);
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+  .hero-dot{
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(17,24,39,.18);
+    cursor: pointer;
+    transition: .2s ease;
+  }
+
+.hero-dot.active{
+  width: 30px;
+  background: linear-gradient(135deg, #ff7a1a, #ea580c);
+}
+
+
+  @keyframes heroFadeUp{
+  from{
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-media-card::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.02) 0%,
+    rgba(15,23,42,0.04) 100%
+  );
+  pointer-events: none;
+}
+
+
+.hero-nav button:hover{
+  transform: translateY(-2px);
+  background: #fff;
+}
+
+
+@media (max-width: 991px){
+  .hero-slide{
+grid-template-columns: 1fr;
+    padding: 22px;
+    min-height: auto;
+  }
+
+    .hero-copy{
+    padding-inline-start: 0;
+  }
+
+  .hero-title{
+    font-size: 34px;
+  }
+
+  .hero-subtitle{
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .hero-media,
+  .hero-media-card,
+  .hero-image,
+  .hero-no-image{
+    min-height: 240px;
+  }
+
+  .hero-nav{
+    inset-inline: 18px;
+  }
+  .hero-dots{
+  bottom: 22px;
+}
+}
+
+.site-brand-link{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none !important;
+  color:#111827 !important;
+  font-weight:900;
+}
+
+.site-brand-link:hover,
+.site-brand-link:focus,
+.site-brand-link:active,
+.site-brand-link:visited{
+  text-decoration:none !important;
+  color:#111827 !important;
+}
+
+.site-brand-logo{
+  width:34px;
+  height:34px;
+  object-fit:cover;
+  border-radius:10px;
+  display:block;
+}
+
+.site-brand-emoji{
+  font-size:22px;
+  line-height:1;
+}
+
+.site-brand-text{
+  color:#111827;
+  font-weight:900;
+  font-size:18px;
+  line-height:1.1;
+}
+
+.nav-main-links{
+  display:flex;
+  align-items:center;
+  gap:22px;
+  margin-inline-start:28px;
+  flex-wrap:wrap;
+}
+
+.nav-main-link{
+  text-decoration:none;
+  color:#334155;
+  font-weight:800;
+  font-size:15px;
+  transition:.2s ease;
+  position:relative;
+}
+
+.nav-main-link:hover,
+.nav-main-link:focus{
+  color:#ea580c;
+}
+
+.nav-main-link::after{
+  content:"";
+  position:absolute;
+  inset-inline-start:0;
+  bottom:-8px;
+  width:0;
+  height:2px;
+  background:linear-gradient(135deg, #ff7a1a, #ea580c);
+  border-radius:999px;
+  transition:.25s ease;
+}
+
+.nav-main-link:hover::after,
+.nav-main-link.is-active::after{
+  width:100%;
+}
+
+.nav-main-link.is-active{
+  color:#ea580c;
+}
+
+.nav-actions-wrap{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-inline-start:auto;
+  flex-wrap:wrap;
+}
+
+@media (max-width: 991px){
+  .site-brand-text{
+    font-size:16px;
+  }
+
+  .nav-main-links{
+    display:none;
+  }
+
+  .nav-actions-wrap{
+    gap:8px;
+  }
+
+  .nav-actions-wrap .btn{
+    padding-inline:10px;
+    font-size:14px;
+  }
+}
+
+.mobile-nav-links{
+  display:none;
+  padding:10px 0 0;
+}
+
+.mobile-nav-links-wrap{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.mobile-nav-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:0 14px;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  color:#111827;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:800;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:focus{
+  color:#ea580c;
+  border-color:#fdba74;
+  background:#fff7ed;
+}
+
+.mobile-nav-link.is-active{
+  background:#fff7ed;
+  color:#ea580c;
+  border-color:#fdba74;
+}
+
+@media (max-width: 991px){
+  .mobile-nav-links{
+    display:block;
+  }
+}
+</style>
+
+<?php if (!empty($heroSlides)): ?>
+<section class="hero-main" aria-label="Hero">
+  <div class="hero-slider" id="heroSlider">
+    <div class="hero-track" id="heroTrack">
+      <?php foreach ($heroSlides as $slide): ?>
+        <div class="hero-slide">
+          <div class="hero-copy">
+            <span class="hero-badge">مختارات مميزة</span>
+
+            <h1 class="hero-title">
+              <?= htmlspecialchars($slide['title'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+            </h1>
+
+            <?php if (!empty($slide['subtitle'])): ?>
+              <p class="hero-subtitle">
+                <?= nl2br(htmlspecialchars($slide['subtitle'], ENT_QUOTES, 'UTF-8')) ?>
+              </p>
+            <?php endif; ?>
+
+            <div class="hero-actions">
+              <?php if (!empty($slide['button_text_1']) && !empty($slide['button_link_1'])): ?>
+                <a class="hero-btn hero-btn-primary" href="<?= htmlspecialchars($slide['button_link_1'], ENT_QUOTES, 'UTF-8') ?>">
+                  <?= htmlspecialchars($slide['button_text_1'], ENT_QUOTES, 'UTF-8') ?>
+                </a>
+              <?php endif; ?>
+
+              <?php if (!empty($slide['button_text_2']) && !empty($slide['button_link_2'])): ?>
+                <a class="hero-btn hero-btn-secondary" href="<?= htmlspecialchars($slide['button_link_2'], ENT_QUOTES, 'UTF-8') ?>">
+                  <?= htmlspecialchars($slide['button_text_2'], ENT_QUOTES, 'UTF-8') ?>
+                </a>
+              <?php endif; ?>
+            </div>
+          </div>
+
+          <div class="hero-media">
+            <div class="hero-media-card">
+              <?php if (!empty($slide['image'])): ?>
+                <img
+                  class="hero-image"
+                  src="<?= htmlspecialchars($slide['image'], ENT_QUOTES, 'UTF-8') ?>"
+                  alt="<?= htmlspecialchars($slide['title'] ?? 'Hero', ENT_QUOTES, 'UTF-8') ?>"
+                >
+              <?php else: ?>
+                <div class="hero-no-image">لا توجد صورة لهذا السلايد</div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
+
+    <?php if (count($heroSlides) > 1): ?>
+      <div class="hero-nav">
+        <button type="button" id="heroPrevBtn" aria-label="السابق">‹</button>
+        <button type="button" id="heroNextBtn" aria-label="التالي">›</button>
+      </div>
+
+      <div class="hero-dots" id="heroDots">
+        <?php foreach ($heroSlides as $index => $slide): ?>
+          <button
+            type="button"
+            class="hero-dot <?= $index === 0 ? 'active' : '' ?>"
+            data-slide="<?= (int)$index ?>"
+            aria-label="اذهب إلى السلايد <?= (int)$index + 1 ?>"
+          ></button>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </div>
+</section>
+
+<?php if (count($heroSlides) > 1): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const slider = document.getElementById('heroSlider');
+  const track = document.getElementById('heroTrack');
+  const prevBtn = document.getElementById('heroPrevBtn');
+  const nextBtn = document.getElementById('heroNextBtn');
+  const dots = Array.from(document.querySelectorAll('#heroDots .hero-dot'));
+
+  if (!slider || !track || dots.length === 0) return;
+
+  let currentIndex = 0;
+  const total = dots.length;
+  let autoPlay = null;
+
+  function renderSlider() {
+    track.style.transform = `translateX(${currentIndex * -100}%)`;
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentIndex);
+    });
+  }
+
+  function goTo(index) {
+    currentIndex = (index + total) % total;
+    renderSlider();
+  }
+
+  function next() {
+    goTo(currentIndex + 1);
+  }
+
+  function prev() {
+    goTo(currentIndex - 1);
+  }
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    autoPlay = setInterval(next, 5000);
+  }
+
+  function stopAutoPlay() {
+    if (autoPlay) {
+      clearInterval(autoPlay);
+      autoPlay = null;
+    }
+  }
+
+  if (nextBtn) nextBtn.addEventListener('click', function () {
+    next();
+    startAutoPlay();
+  });
+
+  if (prevBtn) prevBtn.addEventListener('click', function () {
+    prev();
+    startAutoPlay();
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', function () {
+      goTo(index);
+      startAutoPlay();
+    });
+  });
+
+  slider.addEventListener('mouseenter', stopAutoPlay);
+  slider.addEventListener('mouseleave', startAutoPlay);
+
+  renderSlider();
+  startAutoPlay();
+});
+</script>
+<?php endif; ?>
+<?php endif; ?>
+
+
+
 
 <?php if (!empty($best ?? [])): ?>
   <section class="mb-4">
@@ -282,7 +930,7 @@ $regUrl    = \App\Helpers\Url::to('/register?return=' . urlencode(\App\Helpers\U
 <div class="toast-container position-fixed top-0 start-0 p-3" style="z-index: 2000">
   <div id="appToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
-      <strong class="me-auto">FirstClass</strong>
+      <strong class="me-auto"><?= htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8') ?></strong>
       <small class="text-muted">الآن</small>
       <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
     </div>

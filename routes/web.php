@@ -25,6 +25,8 @@ use App\Admin\Controllers\SettingsController as AdminSettingsController;
 use App\Admin\Controllers\SettingsApiController as AdminSettingsApiController;
 use App\Admin\Controllers\HeroController as AdminHeroController;
 use App\Admin\Controllers\HeroApiController as AdminHeroApiController;
+use App\Controllers\AboutController;
+use App\Controllers\ContactController;
 
 $router->get('/product', [ProductController::class, 'show']);
 
@@ -79,6 +81,8 @@ $router->get('/my-orders', [\App\Controllers\OrderController::class, 'myOrders']
 $router->post('/order/cancel', [\App\Controllers\OrderController::class, 'cancel']);
 
 $router->get('/order/success', [OrderController::class, 'success']);
+
+$router->get('/admin/orders/print', [AdminOrdersController::class, 'print']);
 
 // ====================== CART API TEST PAGE ======================
 $router->get('/cart-test', function () {
@@ -202,3 +206,6 @@ $router->post('/admin/api/hero/store', [AdminHeroApiController::class, 'store'])
 $router->post('/admin/api/hero/update', [AdminHeroApiController::class, 'update']);
 $router->post('/admin/api/hero/delete', [AdminHeroApiController::class, 'delete']);
 $router->post('/admin/api/hero/toggle', [AdminHeroApiController::class, 'toggle']);
+
+$router->get('/about', [AboutController::class, 'index']);
+$router->get('/contact', [ContactController::class, 'index']);

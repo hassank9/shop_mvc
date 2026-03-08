@@ -194,6 +194,11 @@
 .order-modal-body{
     padding:22px;
 }
+
+.action-btn.print{
+    background:#ecfdf3;
+    color:#027a48;
+}
 </style>
 
 <div class="page-header">
@@ -293,7 +298,16 @@
                     data-order-id="<?= (int)($order['id'] ?? 0) ?>">
                     عرض
                 </button>
+
+                <a
+    href="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::path('/admin/orders/print?id=' . (int)$order['id']), ENT_QUOTES, 'UTF-8') ?>"
+    target="_blank"
+    class="action-btn print"
+>
+    طباعة
+</a>
             </td>
+
         </tr>
     <?php endforeach; ?>
 <?php else: ?>

@@ -6,6 +6,8 @@ use App\Admin\Helpers\AdminUrl;
 use App\Admin\Models\Order;
 use PDO;
 use PDOException;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class OrdersController
 {
@@ -16,27 +18,26 @@ class OrdersController
         $this->db = $this->createAdminConnection();
     }
 
-    private function createAdminConnection(): PDO
-    {
-        $host = 'localhost';
-        $dbname = 'firstclass_shop';
-        $username = 'root';
-        $password = '';
+private function createAdminConnection(): PDO
+{
+    $config = require dirname(__DIR__, 3) . '/config/database.php';
 
-        try {
-            return new PDO(
-                "mysql:host={$host};dbname={$dbname};charset=utf8mb4",
-                $username,
-                $password,
-                [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                ]
-            );
-        } catch (PDOException $e) {
-            die('Admin DB Connection Failed: ' . $e->getMessage());
-        }
+    try {
+        $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['database']};charset={$config['charset']}";
+
+        return new PDO(
+            $dsn,
+            $config['username'],
+            $config['password'],
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]
+        );
+    } catch (PDOException $e) {
+        die('Admin DB Connection Failed: ' . $e->getMessage());
     }
+}
 
     public function index(): void
     {
@@ -98,4 +99,38 @@ class OrdersController
 
         require dirname(__DIR__) . '/Views/layouts/admin.php';
     }
+
+
+    public function print(): void
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (!isset($_SESSION['admin_id'])) {
+        header('Location: ' . AdminUrl::path('/admin/login'));
+        exit;
+    }
+
+    $id = (int)($_GET['id'] ?? 0);
+
+    if ($id <= 0) {
+        die('رقم الطلب غير صالح');
+    }
+
+    $orderModel = new Order($this->db);
+
+    $order = $orderModel->findById($id);
+    if (!$order) {
+        die('الطلب غير موجود');
+    }
+
+    $items = $orderModel->getItemsByOrderId($id);
+
+    $settingsStmt = $this->db->query("SELECT * FROM settings ORDER BY id ASC LIMIT 1");
+    $settings = $settingsStmt->fetch(PDO::FETCH_ASSOC) ?: [];
+
+    require dirname(__DIR__) . '/Views/orders/print.php';
+    exit;
+}
 }
