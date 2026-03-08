@@ -155,11 +155,11 @@ function isAdminActive(string $needle, string $currentPath): string {
     </span>
 </a>
 
-<a class="sidebar-link <?= isAdminActive('/admin/users', $currentPath) ?>"
-   href="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::path('/admin/users')) ?>">
+<a class="sidebar-link <?= isAdminActive('/admin/settings', $currentPath) ?>"
+   href="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::path('/admin/settings')) ?>">
     <span class="sidebar-link-main">
-        <span class="sidebar-icon">👥</span>
-        <span class="sidebar-text">المستخدمون</span>
+        <span class="sidebar-icon">⚙️</span>
+        <span class="sidebar-text">الإعدادات</span>
     </span>
 </a>
 

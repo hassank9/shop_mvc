@@ -21,6 +21,8 @@ use App\Admin\Controllers\ProductsController as AdminProductsController;
 use App\Admin\Controllers\ProductsApiController as AdminProductsApiController;
 use App\Admin\Controllers\UsersController as AdminUsersController;
 use App\Admin\Controllers\UsersApiController as AdminUsersApiController;
+use App\Admin\Controllers\SettingsController as AdminSettingsController;
+use App\Admin\Controllers\SettingsApiController as AdminSettingsApiController;
 
 $router->get('/product', [ProductController::class, 'show']);
 
@@ -188,3 +190,6 @@ $router->get('/admin/users', [AdminUsersController::class, 'index']);
 
 $router->post('/admin/api/users/update', [AdminUsersApiController::class, 'update']);
 $router->post('/admin/api/users/delete', [AdminUsersApiController::class, 'delete']);
+
+$router->get('/admin/settings', [AdminSettingsController::class, 'index']);
+$router->post('/admin/api/settings/update', [AdminSettingsApiController::class, 'update']);

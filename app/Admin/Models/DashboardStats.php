@@ -118,13 +118,46 @@ public function getLowStockProducts(int $limit = 5, ?int $threshold = null): arr
 
 public function getSetting(string $key, string $default = ''): string
 {
-    $sql = "SELECT setting_value FROM settings WHERE setting_key = :key LIMIT 1";
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute([':key' => $key]);
+    $allowedColumns = [
+        'low_stock_threshold',
+        'site_name_ar',
+        'site_name_en',
+        'site_description',
+        'logo',
+        'favicon',
+        'about_title',
+        'about_text',
+        'about_image',
+        'contact_phone_1',
+        'contact_phone_2',
+        'contact_whatsapp',
+        'contact_email',
+        'contact_address',
+        'contact_map_url',
+        'facebook_url',
+        'instagram_url',
+        'telegram_url',
+        'tiktok_url',
+        'receipt_store_name',
+        'receipt_header_text',
+        'receipt_footer_text',
+        'receipt_show_logo',
+        'receipt_show_address',
+        'receipt_show_contacts',
+        'receipt_barcode_type',
+        'receipt_barcode_value'
+    ];
+
+    if (!in_array($key, $allowedColumns, true)) {
+        return $default;
+    }
+
+    $sql = "SELECT `$key` FROM settings ORDER BY id ASC LIMIT 1";
+    $stmt = $this->db->query($sql);
 
     $value = $stmt->fetchColumn();
 
-    return $value !== false ? (string)$value : $default;
+    return $value !== false && $value !== null ? (string) $value : $default;
 }
 
 }
