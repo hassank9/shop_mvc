@@ -20,6 +20,7 @@ use App\Admin\Controllers\CategoriesApiController as AdminCategoriesApiControlle
 use App\Admin\Controllers\ProductsController as AdminProductsController;
 use App\Admin\Controllers\ProductsApiController as AdminProductsApiController;
 use App\Admin\Controllers\UsersController as AdminUsersController;
+use App\Admin\Controllers\UsersApiController as AdminUsersApiController;
 
 $router->get('/product', [ProductController::class, 'show']);
 
@@ -183,3 +184,7 @@ $router->get('/admin/api/products/show', [AdminProductsApiController::class, 'sh
 $router->post('/admin/api/products/update', [AdminProductsApiController::class, 'update']);
 
 $router->get('/admin/users', [AdminUsersController::class, 'index']);
+
+
+$router->post('/admin/api/users/update', [AdminUsersApiController::class, 'update']);
+$router->post('/admin/api/users/delete', [AdminUsersApiController::class, 'delete']);
