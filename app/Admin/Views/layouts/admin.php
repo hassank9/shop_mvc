@@ -169,6 +169,7 @@ $contentView = $contentView ?? null;
         }
     </style>
 </head>
+
 <body>
 
 <div class="admin-app">
@@ -198,6 +199,10 @@ $contentView = $contentView ?? null;
 </div>
 
 <script>
+
+    window.APP_BASE_PATH = <?= json_encode(rtrim(\App\Helpers\Url::basePath(), '/')) ?>;
+
+
     (function () {
         const saved = localStorage.getItem('admin_sidebar_collapsed');
         if (saved === '1' && window.innerWidth > 991) {

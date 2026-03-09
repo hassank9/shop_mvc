@@ -134,7 +134,7 @@ private function createAdminConnection(): PDO
             }
         }
 
-        return '/shop_mvc/public/uploads/hero/' . $fileName;
+        return '/uploads/hero/' . $fileName;
     }
 
     public function store(): void

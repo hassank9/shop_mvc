@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function () {
             categoryIdInput.value = '';
 
             try {
-                const response = await fetch(`/shop_mvc/public/admin/api/categories/show?id=${encodeURIComponent(categoryId)}`, {
+                const response = await fetch(`${window.APP_BASE_PATH}/admin/api/categories/show?id=${encodeURIComponent(categoryId)}`, {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest'
                     }
@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const formData = new URLSearchParams();
                 formData.append('id', categoryId);
 
-                const response = await fetch('/shop_mvc/public/admin/api/categories/delete', {
+                const response = await fetch(`${window.APP_BASE_PATH}/admin/api/categories/delete`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -465,8 +465,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const isEditMode = id !== '';
             const endpoint = isEditMode
-                ? '/shop_mvc/public/admin/api/categories/update'
-                : '/shop_mvc/public/admin/api/categories/store';
+                ? `${window.APP_BASE_PATH}/admin/api/categories/update`
+                : `${window.APP_BASE_PATH}/admin/api/categories/store`;
 
             this.disabled = true;
             this.textContent = isEditMode ? 'جاري حفظ التعديل...' : 'جاري الحفظ...';

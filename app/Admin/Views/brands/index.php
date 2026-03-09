@@ -383,7 +383,7 @@ function setEditMode(brand) {
         brandIdInput.value = '';
 
         try {
-            const response = await fetch(`/shop_mvc/public/admin/api/brands/show?id=${encodeURIComponent(brandId)}`, {
+            const response = await fetch(`${window.APP_BASE_PATH}/admin/api/brands/show?id=${encodeURIComponent(brandId)}`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
@@ -427,7 +427,7 @@ deleteButtons.forEach(button => {
             const formData = new URLSearchParams();
             formData.append('id', brandId);
 
-            const response = await fetch('/shop_mvc/public/admin/api/brands/delete', {
+            const response = await fetch(`${window.APP_BASE_PATH}/admin/api/brands/delete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -468,8 +468,8 @@ if (saveBtn) {
 
         const isEditMode = id !== '';
         const endpoint = isEditMode
-            ? '/shop_mvc/public/admin/api/brands/update'
-            : '/shop_mvc/public/admin/api/brands/store';
+            ? `${window.APP_BASE_PATH}/admin/api/brands/update`
+            : `${window.APP_BASE_PATH}/admin/api/brands/store`;
 
         this.disabled = true;
         this.textContent = isEditMode ? 'جاري حفظ التعديل...' : 'جاري الحفظ...';

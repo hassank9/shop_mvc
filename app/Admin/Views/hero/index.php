@@ -420,7 +420,7 @@ $slides = $slides ?? [];
                             <td><?= (int)($slide['id'] ?? 0) ?></td>
                             <td>
                                 <?php if (!empty($slide['image'])): ?>
-                                    <img src="<?= htmlspecialchars($slide['image'], ENT_QUOTES, 'UTF-8') ?>" alt="Hero" class="hero-thumb">
+                                    <img src="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::file($slide['image'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" alt="Hero" class="hero-thumb">
                                 <?php else: ?>
                                     <span style="color:#98a2b3;">بدون صورة</span>
                                 <?php endif; ?>
@@ -460,7 +460,7 @@ $slides = $slides ?? [];
                                         data-button2-link="<?= htmlspecialchars($slide['button_link_2'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
                                         data-sort-order="<?= (int)($slide['sort_order'] ?? 0) ?>"
                                         data-is-active="<?= !empty($slide['is_active']) ? '1' : '0' ?>"
-                                        data-image="<?= htmlspecialchars($slide['image'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                                        data-image="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::file($slide['image'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
                                         تعديل
                                     </button>
 
@@ -722,7 +722,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const formData = new URLSearchParams();
                 formData.append('id', heroId);
 
-                const response = await fetch('/shop_mvc/public/admin/api/hero/delete', {
+                const response = await fetch(`${window.APP_BASE_PATH}/admin/api/hero/delete`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -758,7 +758,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const formData = new URLSearchParams();
                 formData.append('id', heroId);
 
-                const response = await fetch('/shop_mvc/public/admin/api/hero/toggle', {
+                const response = await fetch(`${window.APP_BASE_PATH}/admin/api/hero/toggle`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -797,8 +797,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const isEditMode = id !== '';
             const endpoint = isEditMode
-                ? '/shop_mvc/public/admin/api/hero/update'
-                : '/shop_mvc/public/admin/api/hero/store';
+                ? `${window.APP_BASE_PATH}/admin/api/hero/update`
+                : `${window.APP_BASE_PATH}/admin/api/hero/store`;
 
             this.disabled = true;
             this.textContent = isEditMode ? 'جاري حفظ التعديل...' : 'جاري الحفظ...';

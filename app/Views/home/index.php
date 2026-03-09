@@ -21,7 +21,7 @@ $siteFavicon = trim((string)($siteSettings['favicon'] ?? ''));
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8') ?></title>
 <?php if ($siteFavicon !== ''): ?>
-  <link rel="icon" href="<?= htmlspecialchars($siteFavicon, ENT_QUOTES, 'UTF-8') ?>">
+  <link rel="icon" href="<?= htmlspecialchars(\App\Helpers\Url::file($siteFavicon), ENT_QUOTES, 'UTF-8') ?>">
 <?php endif; ?>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
@@ -59,7 +59,7 @@ $siteFavicon = trim((string)($siteSettings['favicon'] ?? ''));
        href="<?= htmlspecialchars(\App\Helpers\Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">
       <?php if ($siteLogo !== ''): ?>
         <img
-          src="<?= htmlspecialchars($siteLogo, ENT_QUOTES, 'UTF-8') ?>"
+          src="<?= htmlspecialchars(\App\Helpers\Url::file($siteLogo), ENT_QUOTES, 'UTF-8') ?>"
           alt="<?= htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8') ?>"
           class="site-brand-logo"
         >
@@ -625,7 +625,7 @@ grid-template-columns: 1fr;
               <?php if (!empty($slide['image'])): ?>
                 <img
                   class="hero-image"
-                  src="<?= htmlspecialchars($slide['image'], ENT_QUOTES, 'UTF-8') ?>"
+                  src="<?= htmlspecialchars(\App\Helpers\Url::file($slide['image'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
                   alt="<?= htmlspecialchars($slide['title'] ?? 'Hero', ENT_QUOTES, 'UTF-8') ?>"
                 >
               <?php else: ?>

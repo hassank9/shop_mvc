@@ -301,7 +301,7 @@ $settings = $settings ?? [];
                         <label class="form-label">الشعار</label>
                         <div class="image-upload-box">
                             <?php if (!empty($settings['logo'])): ?>
-                                <img src="<?= htmlspecialchars($settings['logo'], ENT_QUOTES, 'UTF-8') ?>" alt="Logo" class="image-preview" id="logoPreview">
+                                <img src="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::file($settings['logo'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" ...>
                             <?php else: ?>
                                 <img src="" alt="Logo" class="image-preview" id="logoPreview" style="display:none;">
                             <?php endif; ?>
@@ -312,8 +312,8 @@ $settings = $settings ?? [];
                     <div class="form-group">
                         <label class="form-label">Favicon</label>
                         <div class="image-upload-box">
-                            <?php if (!empty($settings['favicon'])): ?>
-                                <img src="<?= htmlspecialchars($settings['favicon'], ENT_QUOTES, 'UTF-8') ?>" alt="Favicon" class="image-preview small" id="faviconPreview">
+                            <?php if (!empty(\App\Admin\Helpers\AdminUrl::file($settings['favicon'] ?? ''))): ?>
+                                <img src="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::file($settings['favicon'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" alt="Favicon" class="image-preview small" id="faviconPreview">
                             <?php else: ?>
                                 <img src="" alt="Favicon" class="image-preview small" id="faviconPreview" style="display:none;">
                             <?php endif; ?>
@@ -358,8 +358,8 @@ $settings = $settings ?? [];
                         <div class="form-group full-width">
                     <label class="form-label">صورة من نحن</label>
                     <div class="image-upload-box">
-                        <?php if (!empty($settings['about_image'])): ?>
-                            <img src="<?= htmlspecialchars($settings['about_image'], ENT_QUOTES, 'UTF-8') ?>" alt="About" class="image-preview" id="aboutImagePreview">
+                        <?php if (!empty(\App\Admin\Helpers\AdminUrl::file($settings['about_image'] ?? ''))): ?>
+                            <img src="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::file($settings['about_image'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" alt="About" class="image-preview" id="aboutImagePreview">
                         <?php else: ?>
                             <img src="" alt="About" class="image-preview" id="aboutImagePreview" style="display:none;">
                         <?php endif; ?>

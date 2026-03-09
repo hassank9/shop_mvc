@@ -110,7 +110,7 @@ private function uploadImage(string $fieldName, string $prefix, ?string $oldFile
         }
     }
 
-    return '/shop_mvc/public/uploads/settings/' . $fileName;
+    return '/uploads/settings/' . $fileName;
 }
 
 

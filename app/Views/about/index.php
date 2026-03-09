@@ -20,7 +20,7 @@ $siteFavicon = trim((string)($siteSettings['favicon'] ?? ''));
   <title><?= htmlspecialchars($aboutTitle . ' | ' . $siteName, ENT_QUOTES, 'UTF-8') ?></title>
 
   <?php if ($siteFavicon !== ''): ?>
-    <link rel="icon" href="<?= htmlspecialchars($siteFavicon, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="icon" href="<?= htmlspecialchars(\App\Helpers\Url::file($siteFavicon), ENT_QUOTES, 'UTF-8') ?>">
   <?php endif; ?>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
@@ -229,7 +229,7 @@ $siteFavicon = trim((string)($siteSettings['favicon'] ?? ''));
     <a class="navbar-brand fw-bold site-brand-link" href="<?= htmlspecialchars(\App\Helpers\Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">
       <?php if ($siteLogo !== ''): ?>
         <img
-          src="<?= htmlspecialchars($siteLogo, ENT_QUOTES, 'UTF-8') ?>"
+          src="<?= htmlspecialchars(\App\Helpers\Url::file($siteLogo), ENT_QUOTES, 'UTF-8') ?>"
           alt="<?= htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8') ?>"
           class="site-brand-logo"
         >
@@ -266,7 +266,7 @@ $siteFavicon = trim((string)($siteSettings['favicon'] ?? ''));
         <div class="about-image-wrap">
           <?php if ($aboutImage !== ''): ?>
             <img
-              src="<?= htmlspecialchars($aboutImage, ENT_QUOTES, 'UTF-8') ?>"
+              src="<?= htmlspecialchars(\App\Helpers\Url::file($aboutImage), ENT_QUOTES, 'UTF-8') ?>"
               alt="<?= htmlspecialchars($aboutTitle, ENT_QUOTES, 'UTF-8') ?>"
               class="about-image"
             >

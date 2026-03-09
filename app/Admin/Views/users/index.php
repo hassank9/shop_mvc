@@ -616,7 +616,7 @@ deleteButtons.forEach(button => {
             formData.append('id', id);
             formData.append('type', type);
 
-            const response = await fetch('/shop_mvc/public/admin/api/users/delete', {
+            const response = await fetch(`${window.APP_BASE_PATH}/admin/api/users/delete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -698,7 +698,7 @@ deleteButtons.forEach(button => {
             formData.append('username', payload.username);
             formData.append('role', payload.role);
 
-            const response = await fetch('/shop_mvc/public/admin/api/users/update', {
+            const response = await fetch(`${window.APP_BASE_PATH}/admin/api/users/update`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',

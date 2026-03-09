@@ -239,6 +239,16 @@
        class="action-btn text-decoration-none d-inline-flex align-items-center">
         إعادة ضبط
     </a>
+
+    <a href="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::path('/admin/orders/export-excel') . '?' . http_build_query([
+    'status' => $currentStatus ?? 'all',
+    'date_from' => $currentDateFrom ?? '',
+    'date_to' => $currentDateTo ?? '',
+]), ENT_QUOTES, 'UTF-8') ?>"
+   class="action-btn text-decoration-none d-inline-flex align-items-center">
+    تصدير Excel
+</a>
+
 </form>
 
 </div>
@@ -520,7 +530,7 @@ if (saveBtn && statusSelect) {
             formData.append('id', orderId);
             formData.append('status', newStatus);
 
-            const response = await fetch(`/shop_mvc/public/admin/api/orders/update-status`, {
+            const response = await fetch(`${window.APP_BASE_PATH}/admin/api/orders/update-status`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -572,7 +582,7 @@ if (saveBtn && statusSelect) {
             openModal();
 
             try {
-                const response = await fetch(`/shop_mvc/public/admin/api/orders/show?id=${encodeURIComponent(orderId)}`, {
+                const response = await fetch(`${window.APP_BASE_PATH}/admin/api/orders/show?id=${encodeURIComponent(orderId)}`, {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest'
                     }

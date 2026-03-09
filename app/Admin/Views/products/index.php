@@ -448,7 +448,7 @@
                             <div class="product-cell">
                                 <div class="product-thumb">
                                     <?php if ($imageFile !== ''): ?>
-                                        <img src="/shop_mvc/public/uploads/products/<?= htmlspecialchars($imageFile) ?>" alt="<?= htmlspecialchars($product['name'] ?? '') ?>">
+                                        <img src="<?= htmlspecialchars(\App\Admin\Helpers\AdminUrl::file('/uploads/products/' . ltrim($imageFile, '/')), ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($product['name'] ?? '') ?>">
                                     <?php else: ?>
                                         No Image
                                     <?php endif; ?>
@@ -774,7 +774,7 @@ document.addEventListener('DOMContentLoaded', function () {
             productCurrentGallery.innerHTML = product.gallery_images.map(fileName => `
                 <div style="width:70px;height:70px;border:1px solid #eef1f5;border-radius:12px;overflow:hidden;background:#f8fafc;">
                     <img
-                        src="/shop_mvc/public/uploads/products/${encodeURIComponent(fileName)}"
+                        src="${window.APP_BASE_PATH}/uploads/products/${encodeURIComponent(fileName)}"
                         alt=""
                         style="width:100%;height:100%;object-fit:cover;display:block;"
                     >
@@ -821,7 +821,7 @@ document.addEventListener('DOMContentLoaded', function () {
             modalSubtitle.textContent = 'يرجى الانتظار';
 
             try {
-                const response = await fetch(`/shop_mvc/public/admin/api/products/show?id=${encodeURIComponent(productId)}`, {
+                const response = await fetch(`${window.APP_BASE_PATH}/admin/api/products/show?id=${encodeURIComponent(productId)}`, {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest'
                     }
@@ -882,8 +882,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const isEditMode = id !== '';
         const endpoint = isEditMode
-            ? '/shop_mvc/public/admin/api/products/update'
-            : '/shop_mvc/public/admin/api/products/store';
+            ? `${window.APP_BASE_PATH}/admin/api/products/update`
+            : `${window.APP_BASE_PATH}/admin/api/products/store`;
 
         this.disabled = true;
         this.textContent = isEditMode ? 'جاري حفظ التعديل...' : 'جاري الحفظ...';
