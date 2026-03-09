@@ -242,6 +242,25 @@
             margin-top:12px;
         }
     }
+
+    .stat-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:6px;
+}
+
+.stat-head .stat-label{
+    margin:0;
+}
+
+.stat-head .stat-note{
+    margin:0;
+    font-size:12px;
+    color:#6b7280;
+    white-space:nowrap;
+}
 </style>
 
 <div class="dashboard-header">
@@ -252,62 +271,53 @@
 </div>
 
 <div class="stats-grid">
-    <div class="stat-card primary">
-        <div class="stat-icon">👥</div>
-        <p class="stat-label">عدد المستخدمين</p>
-        <h3 class="stat-value"><?= (int)($stats['users_count'] ?? 0) ?></h3>
-        <span class="stat-note">إجمالي الحسابات</span>
-    </div>
-
-    <div class="stat-card dark">
-        <div class="stat-icon">🧾</div>
-        <p class="stat-label">إجمالي الطلبات</p>
-        <h3 class="stat-value"><?= (int)($stats['orders_count'] ?? 0) ?></h3>
-        <span class="stat-note">كل الطلبات المسجلة</span>
-    </div>
-
-    <div class="stat-card dark">
-        <div class="stat-icon">⏳</div>
-        <p class="stat-label">طلبات معلقة</p>
-        <h3 class="stat-value"><?= (int)($stats['pending_orders_count'] ?? 0) ?></h3>
-        <span class="stat-note">بانتظار المعالجة</span>
-    </div>
-
-    <div class="stat-card dark">
-        <div class="stat-icon">✅</div>
-        <p class="stat-label">تم التسليم</p>
-        <h3 class="stat-value"><?= (int)($stats['delivered_orders_count'] ?? 0) ?></h3>
-        <span class="stat-note">طلبات مكتملة</span>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-icon">✔️</div>
-        <p class="stat-label">تمت الموافقة</p>
-        <h3 class="stat-value"><?= (int)($stats['approved_orders_count'] ?? 0) ?></h3>
-        <span class="stat-note">طلبات جاهزة للتجهيز</span>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-icon">❌</div>
-        <p class="stat-label">الطلبات الملغاة</p>
-        <h3 class="stat-value"><?= (int)($stats['cancelled_orders_count'] ?? 0) ?></h3>
-        <span class="stat-note">طلبات ألغيت</span>
-    </div>
-
-    <div class="stat-card primary">
-        <div class="stat-icon">💰</div>
-        <p class="stat-label">إجمالي المبيعات</p>
-        <h3 class="stat-value"><?= number_format((float)($stats['total_sales'] ?? 0), 2) ?></h3>
-        <span class="stat-note">مجموع كل الطلبات</span>
-    </div>
-
-    <div class="stat-card">
-    <div class="stat-icon">📈</div>
-    <p class="stat-label">صافي الربح</p>
-    <h3 class="stat-value"><?= number_format((float)($stats['total_profit'] ?? 0), 2) ?></h3>
-    <span class="stat-note">بدون الطلبات الملغاة</span>
+<div class="stat-card primary">
+    <div class="stat-icon">👥</div>
+    <p class="stat-label">عدد المستخدمين: إجمالي الحسابات</p>
+    <h3 class="stat-value"><?= (int)($stats['users_count'] ?? 0) ?></h3>
 </div>
 
+<div class="stat-card dark">
+    <div class="stat-icon">🧾</div>
+    <p class="stat-label">إجمالي الطلبات: كل الطلبات المسجلة</p>
+    <h3 class="stat-value"><?= (int)($stats['orders_count'] ?? 0) ?></h3>
+</div>
+
+<div class="stat-card dark">
+    <div class="stat-icon">⏳</div>
+    <p class="stat-label">طلبات معلقة: بانتظار المعالجة</p>
+    <h3 class="stat-value"><?= (int)($stats['pending_orders_count'] ?? 0) ?></h3>
+</div>
+
+<div class="stat-card dark">
+    <div class="stat-icon">✅</div>
+    <p class="stat-label">تم التسليم: طلبات مكتملة</p>
+    <h3 class="stat-value"><?= (int)($stats['delivered_orders_count'] ?? 0) ?></h3>
+</div>
+
+<div class="stat-card">
+    <div class="stat-icon">✔️</div>
+    <p class="stat-label">تمت الموافقة: طلبات جاهزة للتجهيز</p>
+    <h3 class="stat-value"><?= (int)($stats['approved_orders_count'] ?? 0) ?></h3>
+</div>
+
+<div class="stat-card">
+    <div class="stat-icon">❌</div>
+    <p class="stat-label">الطلبات الملغاة: طلبات ألغيت</p>
+    <h3 class="stat-value"><?= (int)($stats['cancelled_orders_count'] ?? 0) ?></h3>
+</div>
+
+<div class="stat-card primary">
+    <div class="stat-icon">💰</div>
+    <p class="stat-label">إجمالي المبيعات: مجموع الطلبات المسلّمة</p>
+    <h3 class="stat-value"><?= number_format((float)($stats['total_sales'] ?? 0), 0) ?> د.ع</h3>
+</div>
+
+<div class="stat-card">
+    <div class="stat-icon">📈</div>
+    <p class="stat-label">صافي الربح: للطلبات المسلّمة فقط</p>
+    <h3 class="stat-value"><?= number_format((float)($stats['total_profit'] ?? 0), 0) ?> د.ع</h3>
+</div>
 
 </div>
     
@@ -351,7 +361,7 @@
 <?php else: ?>
     <tr>
         <td>لا توجد بيانات بعد</td>
-        <td><?= htmlspecialchars($item['brand_name'] ?? '—') ?></td>
+        <td>—</td>
         <td>0</td>
         <td><span class="mini-badge">قريبًا</span></td>
     </tr>

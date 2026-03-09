@@ -77,16 +77,17 @@ public function getTotalProfit(): float
         SELECT COALESCE(SUM((oi.unit_price - oi.cost_price) * oi.qty), 0)
         FROM order_items oi
         INNER JOIN orders o ON o.id = oi.order_id
-        WHERE o.status <> :cancelled
+        WHERE o.status = :status
     ";
 
     $stmt = $this->db->prepare($sql);
     $stmt->execute([
-        ':cancelled' => 'cancelled'
+        ':status' => 'delivered',
     ]);
 
     return (float) $stmt->fetchColumn();
 }
+
 
 public function getLowStockProducts(int $limit = 5, ?int $threshold = null): array
 {
