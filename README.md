@@ -223,7 +223,8 @@ The main goal of this project is to provide a strong foundation for a profession
 ## Author
 Developed with attention to detail, usability, and modern design principles.
 
-https://github.com/hassank9/shop_mvc/blob/567525723a9c83050f7c984e02c892b8a5f3e71a/imgGithub/User1.png
+![image_alt](https://github.com/hassank9/shop_mvc/blob/567525723a9c83050f7c984e02c892b8a5f3e71a/imgGithub/User1.png)
+
 
 
 
