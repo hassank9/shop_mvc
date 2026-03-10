@@ -1,9 +1,27 @@
+<?php
+$siteSettings = \App\Models\SiteSetting::first();
+
+$siteName = trim((string)($siteSettings['site_name_ar'] ?? ''));
+if ($siteName === '') {
+    $siteName = trim((string)($siteSettings['site_name_en'] ?? ''));
+}
+if ($siteName === '') {
+    $siteName = 'Store';
+}
+
+$siteLogo = trim((string)($siteSettings['logo'] ?? ''));
+$siteFavicon = trim((string)($siteSettings['favicon'] ?? ''));
+?>
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= htmlspecialchars($title ?? 'Cart', ENT_QUOTES, 'UTF-8') ?></title>
+  <title><?= htmlspecialchars(($title ?? 'السلة') . ' | ' . $siteName, ENT_QUOTES, 'UTF-8') ?></title>
+
+  <?php if ($siteFavicon !== ''): ?>
+    <link rel="icon" href="<?= htmlspecialchars(\App\Helpers\Url::file($siteFavicon), ENT_QUOTES, 'UTF-8') ?>">
+  <?php endif; ?>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -12,13 +30,63 @@
     body{font-family:'Cairo',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f6f7fb}
     .cardx{border:0;box-shadow:0 10px 30px rgba(16,24,40,.10);border-radius:16px}
     .muted{color:#667085}
+
+    .site-brand-link{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none !important;
+      color:#111827 !important;
+      font-weight:900;
+    }
+
+    .site-brand-link:hover,
+    .site-brand-link:focus,
+    .site-brand-link:active,
+    .site-brand-link:visited{
+      text-decoration:none !important;
+      color:#111827 !important;
+    }
+
+    .site-brand-logo{
+      width:34px;
+      height:34px;
+      object-fit:cover;
+      border-radius:10px;
+      display:block;
+    }
+
+    .site-brand-emoji{
+      font-size:22px;
+      line-height:1;
+    }
+
+    .site-brand-text{
+      color:#111827;
+      font-weight:900;
+      font-size:24px;
+      line-height:1.1;
+    }
   </style>
 </head>
 <body>
 
 <nav class="navbar bg-white border-bottom sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="<?= htmlspecialchars(\App\Helpers\Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">🛒 FirstClass</a>
+    <a class="navbar-brand fw-bold site-brand-link" href="<?= htmlspecialchars(\App\Helpers\Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">
+      <?php if ($siteLogo !== ''): ?>
+        <img
+          src="<?= htmlspecialchars(\App\Helpers\Url::file($siteLogo), ENT_QUOTES, 'UTF-8') ?>"
+          alt="<?= htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8') ?>"
+          class="site-brand-logo"
+        >
+      <?php else: ?>
+        <span class="site-brand-emoji">🛒</span>
+      <?php endif; ?>
+
+      <span class="site-brand-text"><?= htmlspecialchars($siteName, ENT_QUOTES, 'UTF-8') ?></span>
+    </a>
+
     <div class="d-flex gap-2">
       <a class="btn btn-outline-dark" href="<?= htmlspecialchars(\App\Helpers\Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">متابعة التسوق</a>
       <a class="btn btn-success" href="<?= htmlspecialchars(\App\Helpers\Url::to('/checkout'), ENT_QUOTES, 'UTF-8') ?>">إتمام الطلب</a>
@@ -53,7 +121,7 @@
         <hr>
         <div class="d-flex justify-content-between">
           <span class="muted">الإجمالي</span>
-          <b>$<span id="total">0.00</span></b>
+          <b> د.ع <span id="total">0.00</span></b>
         </div>
         <div class="d-grid gap-2 mt-3">
           <a class="btn btn-success" id="checkoutBtn" href="<?= htmlspecialchars(\App\Helpers\Url::to('/checkout'), ENT_QUOTES, 'UTF-8') ?>">إتمام الطلب</a>
@@ -179,7 +247,6 @@
     render(data);
   });
 
-  // init
   (async () => {
     const data = await apiGetCart();
     render(data);

@@ -1,6 +1,6 @@
 <?php
 $siteSettings = $siteSettings ?? [];
-$siteName = $siteName ?? 'FirstClass';
+$siteName = $siteName ?? 'Store';
 
 $aboutTitle = trim((string)($siteSettings['about_title'] ?? ''));
 if ($aboutTitle === '') {

@@ -16,7 +16,7 @@ final class ContactController extends Controller
             $siteName = trim((string)($siteSettings['site_name_en'] ?? ''));
         }
         if ($siteName === '') {
-            $siteName = 'FirstClass';
+            $siteName = 'Store';
         }
 
         $this->view('contact/index', [

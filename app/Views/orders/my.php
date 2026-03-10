@@ -66,7 +66,7 @@
     <!-- ✅ هنا نطبع label مو status -->
     <td><?= htmlspecialchars($label, ENT_QUOTES, 'UTF-8') ?></td>
 
-    <td>$<?= number_format((float)$o['total'], 2) ?></td>
+    <td> د.ع <?= number_format((float)$o['total'], 0) ?></td>
 
     <td class="text-end">
       <!-- ✅ الإلغاء فقط إذا pending -->

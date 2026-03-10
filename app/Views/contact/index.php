@@ -1,6 +1,6 @@
 <?php
 $siteSettings = $siteSettings ?? [];
-$siteName = $siteName ?? 'FirstClass';
+$siteName = $siteName ?? 'Store';
 
 $contactPhone1 = trim((string)($siteSettings['contact_phone_1'] ?? ''));
 $contactPhone2 = trim((string)($siteSettings['contact_phone_2'] ?? ''));

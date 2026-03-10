@@ -44,14 +44,8 @@ $error = $error ?? '';
 
 <nav class="navbar bg-transparent">
   <div class="container py-2">
-    <a class="navbar-brand fw-bold brand text-dark text-decoration-none" href="<?= htmlspecialchars(Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">
-      🛒 FirstClass
-    </a>
-    <div class="d-flex gap-2">
-      <span class="chip">RTL ✅</span>
-      <span class="chip">MVC ✅</span>
-      <span class="chip">Secure ✅</span>
-    </div>
+    <br>
+    <br>
   </div>
 </nav>
 
@@ -83,7 +77,6 @@ $error = $error ?? '';
           <div class="mb-3">
             <label class="form-label fw-semibold">رقم الهاتف</label>
             <input name="phone" class="form-control inputx" placeholder="مثال: 077xxxxxxxx" required autocomplete="tel">
-            <div class="form-text muted">سيُستخدم لعرض “طلباتي” لاحقًا.</div>
           </div>
 
           <div class="mb-3">
@@ -106,7 +99,7 @@ $error = $error ?? '';
       </div>
 
       <div class="text-center mt-3 muted small">
-        بتسجيل الدخول أنت توافق على سياسة الاستخدام (لاحقًا).
+        بتسجيل الدخول أنت توافق على سياسة الاستخدام.
       </div>
 
     </div>

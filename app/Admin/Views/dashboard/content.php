@@ -310,13 +310,13 @@
 <div class="stat-card primary">
     <div class="stat-icon">💰</div>
     <p class="stat-label">إجمالي المبيعات: مجموع الطلبات المسلّمة</p>
-    <h3 class="stat-value"><?= number_format((float)($stats['total_sales'] ?? 0), 0) ?> د.ع</h3>
+    <h3 class="stat-value"><?= number_format((float)($stats['total_sales'] ?? 0), 0) ?> د.ع </h3>
 </div>
 
 <div class="stat-card">
     <div class="stat-icon">📈</div>
     <p class="stat-label">صافي الربح: للطلبات المسلّمة فقط</p>
-    <h3 class="stat-value"><?= number_format((float)($stats['total_profit'] ?? 0), 0) ?> د.ع</h3>
+    <h3 class="stat-value"><?= number_format((float)($stats['total_profit'] ?? 0), 0) ?> د.ع </h3>
 </div>
 
 </div>

@@ -44,14 +44,8 @@ $error = $error ?? '';
 
 <nav class="navbar bg-transparent">
   <div class="container py-2">
-    <a class="navbar-brand fw-bold brand text-dark text-decoration-none" href="<?= htmlspecialchars(Url::to('/'), ENT_QUOTES, 'UTF-8') ?>">
-      🛒 FirstClass
-    </a>
-    <div class="d-flex gap-2">
-      <span class="chip">Checkout 🔒</span>
-      <span class="chip">CSRF ✅</span>
-      <span class="chip">Hash ✅</span>
-    </div>
+<br>
+<br>
   </div>
 </nav>
 
@@ -63,7 +57,6 @@ $error = $error ?? '';
         <div class="d-flex align-items-start justify-content-between gap-2">
           <div>
             <h1 class="h4 fw-bold mb-1">إنشاء حساب جديد</h1>
-            <div class="muted">حتى تكمل الطلب لازم يكون عندك حساب.</div>
           </div>
           <span class="badge text-bg-success rounded-pill px-3 py-2">New</span>
         </div>
@@ -83,19 +76,18 @@ $error = $error ?? '';
           <div class="row g-3">
             <div class="col-12">
               <label class="form-label fw-semibold">الاسم الكامل</label>
-              <input name="full_name" class="form-control inputx" placeholder="مثال: حسن كريم البوحبي" required autocomplete="name">
+              <input name="full_name" class="form-control inputx" placeholder="مثال: حسن كريم " required autocomplete="name">
             </div>
 
             <div class="col-12 col-md-6">
               <label class="form-label fw-semibold">رقم الهاتف</label>
               <input name="phone" class="form-control inputx" placeholder="077xxxxxxxx" required autocomplete="tel">
-              <div class="form-text muted">يجب أن يكون فريدًا (لنفس المستخدم).</div>
             </div>
 
             <div class="col-12 col-md-6">
               <label class="form-label fw-semibold">كلمة المرور</label>
               <input name="password" type="password" class="form-control inputx" minlength="6" placeholder="6 أحرف أو أكثر" required autocomplete="new-password">
-              <div class="form-text muted">سيتم حفظها بشكل آمن (hash).</div>
+              <div class="form-text muted">سيتم حفظها بشكل آمن .</div>
             </div>
 
             <div class="col-12">

@@ -16,7 +16,7 @@ final class AboutController extends Controller
             $siteName = trim((string)($siteSettings['site_name_en'] ?? ''));
         }
         if ($siteName === '') {
-            $siteName = 'FirstClass';
+            $siteName = '-';
         }
 
         $this->view('about/index', [

@@ -79,15 +79,15 @@ $cartTotal = (float)($cartTotal ?? 0);
                 <?php endif; ?>
               </td>
               <td><?= (int)$l['qty'] ?></td>
-              <td>$<?= number_format((float)$l['unit_price'], 2) ?></td>
-              <td class="fw-bold">$<?= number_format((float)$l['line_total'], 2) ?></td>
+              <td> د.ع <?= number_format((float)$l['unit_price'], 0) ?></td>
+              <td class="fw-bold"> د.ع <?= number_format((float)$l['line_total'], 0) ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
         <tfoot>
           <tr>
             <th colspan="3" class="text-end">الإجمالي النهائي</th>
-            <th class="fw-bold">$<?= number_format($cartTotal, 2) ?></th>
+            <th class="fw-bold"> د.ع <?= number_format($cartTotal, 0) ?></th>
           </tr>
         </tfoot>
       </table>

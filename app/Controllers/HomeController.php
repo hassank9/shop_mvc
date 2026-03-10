@@ -24,7 +24,7 @@ final class HomeController extends Controller
         $best = Product::bestSellers(30, 8);
 
         $this->view('home/index', [
-            'title' => 'FirstClass Shop',
+            'title' => ' ',
             'products' => $products,
             'categories' => $categories,
             'brands' => $brands,

@@ -861,7 +861,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="cardx bg-white p-3 h-100">
           <div class="d-flex justify-content-between align-items-start">
             <div class="chip"><?= htmlspecialchars($p['brand_name'] ?? '—', ENT_QUOTES, 'UTF-8') ?></div>
-            <span class="badge text-bg-dark price-badge">$<?= number_format((float)$p['price'], 2) ?></span>
+            <span class="badge text-bg-dark price-badge"> د.ع <?= number_format((float)$p['price'], 0) ?></span>
           </div>
 
           <a class="text-decoration-none text-dark" href="<?= $productBase . urlencode((string)$p['slug']) ?>">
@@ -916,7 +916,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="border-top pt-3 mt-3 d-flex justify-content-between align-items-center">
       <div>
         <div class="muted small">الإجمالي</div>
-        <div class="fw-bold">$<span id="cartTotal">0.00</span></div>
+        <div class="fw-bold"> د.ع <span id="cartTotal">0</span></div>
       </div>
       <button class="btn btn-outline-danger btn-sm" id="clearCartBtn">تفريغ</button>
     </div>
@@ -1042,7 +1042,7 @@ function card(p){
 
         <div class="d-flex justify-content-between align-items-start mt-3">
           <div class="chip">${escapeHtml(p.brand_name || '—')}</div>
-          <span class="badge text-bg-dark price-badge">$${Number(p.price).toFixed(2)}</span>
+          <span class="badge text-bg-dark price-badge"> د.ع ${Number(p.price).toFixed(0)}</span>
         </div>
 
         <a class="text-decoration-none text-dark" href="${productUrl}">
